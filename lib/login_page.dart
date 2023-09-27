@@ -129,6 +129,7 @@ class login_page extends StatefulWidget {
 class _login_pageState extends State<login_page> {
   TextEditingController usercontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
+  var authToken;
 
   Future<void> login() async {
     final apiUrl = Uri.parse(
@@ -147,65 +148,95 @@ class _login_pageState extends State<login_page> {
       // Successfully logged in, handle response data here
       final responseData = json.decode(response.body);
       print(responseData);
+      final token = responseData[
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjYxMCIsImdyb3Vwc2lkIjoiMCIsIm5iZiI6MTY5NTc4OTcyMywiZXhwIjoxNjk1ODc2MTIzLCJpYXQiOjE2OTU3ODk3MjN9.X1tFT1ahRJRD--wAEmDvdZPlEcKmTfpPecj1U0xeVYc'];
+      //print(token);
       final sharedPreferences = await SharedPreferences.getInstance();
-      sharedPreferences.setString(
-          'auth_token',
-          responseData[
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjYxMCIsImdyb3Vwc2lkIjoiMCIsIm5iZiI6MTY5NTc0NTMzNiwiZXhwIjoxNjk1ODMxNzM2LCJpYXQiOjE2OTU3NDUzMzZ9.KZjIov49lLSTiplwBHEUz8F7iSX0oYDPGRZPEZ1dOBQ']);
+      sharedPreferences.setString('auth_token', token);
+
+      //responseData[
+      //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjYxMCIsImdyb3Vwc2lkIjoiMCIsIm5iZiI6MTY5NTc0NTMzNiwiZXhwIjoxNjk1ODMxNzM2LCJpYXQiOjE2OTU3NDUzMzZ9.KZjIov49lLSTiplwBHEUz8F7iSX0oYDPGRZPEZ1dOBQ']);
     } else {
       // Handle error
       print(response.body);
     }
   }
 
+  // Future<bool> isTokenStored() async {
+  //   final sharedPreferences = await SharedPreferences.getInstance();
+  //    authToken = sharedPreferences.getString('auth_token');
+  //   return authToken != null;
+  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    // isTokenStored();
+    super.initState();
+  }
+
+  var fkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        const Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 200, left: 15, right: 15),
-              child: Text(
-                "LOGIN",
-                style: TextStyle(color: Colors.blue, fontSize: 80),
-              ),
-            )),
-        Padding(
-          padding:
-          const EdgeInsets.only(right: 15.0, left: 15, bottom: 15, top: 20),
-          child: TextFormField(
-            controller: usercontroller,
-            decoration: const InputDecoration(
-                hintText: "username",
-                label: Text("username"),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)))),
+      body: Form(
+        key: fkey,
+        child: Column(children: [
+          const Center(
+              child: Padding(
+            padding: EdgeInsets.only(top: 200, left: 15, right: 15),
+            child: Text(
+              "LOGIN",
+              style: TextStyle(color: Colors.blue, fontSize: 80),
+            ),
+          )),
+          Padding(
+            padding: const EdgeInsets.only(
+                right: 15.0, left: 15, bottom: 15, top: 20),
+            child: TextFormField(
+              controller: usercontroller,
+              decoration: const InputDecoration(
+                  hintText: "username",
+                  label: Text("username"),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)))),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15),
-          child: TextFormField(
-            controller: passwordcontroller,
-            decoration: const InputDecoration(
-                hintText: "password",
-                label: Text("password"),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)))),
+          Padding(
+            padding: const EdgeInsets.only(left: 15.0, right: 15),
+            child: TextFormField(
+              controller: passwordcontroller,
+              decoration: const InputDecoration(
+                  hintText: "password",
+                  label: Text("password"),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)))),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 30),
-          child: ElevatedButton(
-            onPressed: () {
-              login();
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return home_page();
-              }));
-            },
-            child: const Text("Login"),
-          ),
-        )
-      ]),
+
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: ElevatedButton(
+              onPressed: () {
+                login();
+                bool validate = fkey.currentState!.validate();
+                if (validate == false) {
+                  return;
+                } else {
+                  if (usercontroller.text == "afthab" &&
+                      passwordcontroller.text == "12345678") {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return home_page();
+                    }));
+                  }
+                }
+              },
+              child: const Text("Login"),
+            ),
+          )
+        ]),
+      ),
     );
   }
 }

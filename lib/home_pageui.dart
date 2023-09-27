@@ -20,7 +20,7 @@ class home_page extends StatefulWidget {
 class _home_pageState extends State<home_page> {
   List pages=[home(),
     // AuditPage(),
-    profile(), profile()];
+    audio_page(), profile()];
 
   int select=0;
   @override

@@ -22,7 +22,7 @@ class _profileState extends State<profile> {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                       image: NetworkImage(
-                          "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"))),
+                          "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"))),
             ),
           ),
         ),
