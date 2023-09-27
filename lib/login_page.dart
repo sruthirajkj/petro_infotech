@@ -153,20 +153,11 @@ class _login_pageState extends State<login_page> {
       //print(token);
       final sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString('auth_token', token);
-
-      //responseData[
-      //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjYxMCIsImdyb3Vwc2lkIjoiMCIsIm5iZiI6MTY5NTc0NTMzNiwiZXhwIjoxNjk1ODMxNzM2LCJpYXQiOjE2OTU3NDUzMzZ9.KZjIov49lLSTiplwBHEUz8F7iSX0oYDPGRZPEZ1dOBQ']);
     } else {
-      // Handle error
       print(response.body);
     }
   }
 
-  // Future<bool> isTokenStored() async {
-  //   final sharedPreferences = await SharedPreferences.getInstance();
-  //    authToken = sharedPreferences.getString('auth_token');
-  //   return authToken != null;
-  // }
   @override
   void initState() {
     // TODO: implement initState
@@ -213,7 +204,6 @@ class _login_pageState extends State<login_page> {
                       borderRadius: BorderRadius.all(Radius.circular(15)))),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.only(top: 30),
             child: ElevatedButton(

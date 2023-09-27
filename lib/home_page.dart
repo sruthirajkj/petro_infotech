@@ -76,48 +76,7 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   fetchData();
-  //   super.initState();
-  // }
-  // // String ?authToken ;
-  // int companyCode = 1;
-  // int userId = 610;
-  //
-  //
-  //
-  // Future<Map<String, dynamic>> fetchData() async {
-  //   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-  //   final String?authToken= sharedPrefs.getString('auth_token');
-  //   if (authToken == null) {
-  //     // Handle the case where the token is null, e.g., show an error message or navigate to login.
-  //     return <String, dynamic>{};
-  //   }
-  //   final apiUrl = Uri.parse('https://www.petroinfotech.com/PetroHSE/api/Dashboard/GetHomePage?companyCode=$companyCode&userId=$userId');
-  //   final headers = {
-  //     'Authorization': 'Bearer $authToken',
-  //     'CompanyCode': companyCode.toString(),
-  //     'UserId': userId.toString(),
-  //     'appType': 'MOB',
-  //     'content-type': 'application/json',
-  //     'accept': 'application/json',
-  //   };
-  //
-  //   final response = await http.get(
-  //     apiUrl,
-  //     headers: headers,
-  //   );
-  //
-  //   if (response.statusCode == 200) {
-  //     final Map<String, dynamic> data = json.decode(response.body);
-  //     print(data);
-  //     return data;
-  //
-  //   } else {
-  //     throw Exception('Failed to load data');
-  //   }
-  // }
+
   void initState() {
     super.initState();
     fetchData();
@@ -165,36 +124,7 @@ class _homeState extends State<home> {
     return Scaffold(  appBar: AppBar(
       title: Text('Petro Infotech'),
     ),
-      // body: FutureBuilder<Map<String, dynamic>>(
-      //   future: fetchData(), // Call the function here
-      //   builder: (context, snapshot) {
-      //     if (snapshot.connectionState == ConnectionState.waiting) {
-      //       return Center(child: CircularProgressIndicator());
-      //     } else if (snapshot.hasError) {
-      //       return Center(child: Text('Error: ${snapshot.error}'));
-      //     } else if (snapshot.hasData) {
-      //       final List<dynamic>? dtContent = snapshot.data!['dtContent'];
-      //       if (dtContent == null || dtContent.isEmpty) {
-      //         return Center(child: Text('No data'));
-      //       }
-      //
-      //       return ListView.builder(
-      //         itemCount: dtContent.length,
-      //         itemBuilder: (context, index) {
-      //           final item = dtContent[index];
-      //           return ListTile(
-      //             title: Text(item["Category"].toString()),
-      //             subtitle: Text(item["ContentType"].toString()),
-      //             // You can add more data fields to display
-      //           );
-      //         },
-      //       );
-      //
-      //     } else {
-      //       return Center(child: Text('No data'));
-      //     }
-      //   },
-      // ),
+
       body: Center(
         child: dtContent.isEmpty
             ? CircularProgressIndicator() // Show a loading indicator if data is being fetched.
